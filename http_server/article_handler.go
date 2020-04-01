@@ -2,20 +2,20 @@ package http_server
 
 import (
 	"fmt"
-	"github.com/jsagl/go-from-scratch/storage"
+	"github.com/jsagl/go-from-scratch/usecase"
 	"net/http"
 )
 
 type ArticleHandler struct {
-	store storage.ArticleStore
+	usecase usecase.ArticleUseCaseInterface
 }
 
-func NewArticleHandler(store storage.ArticleStore) *ArticleHandler {
-	return &ArticleHandler{store: store}
+func NewArticleHandler(usecase usecase.ArticleUseCaseInterface) *ArticleHandler {
+	return &ArticleHandler{usecase: usecase}
 }
 
 func (handler *ArticleHandler) GetArticle(w http.ResponseWriter, r *http.Request) {
-	article, _ := handler.store.GetArticle()
+	article := handler.usecase.GetArticle()
 
 	fmt.Println(article.Title)
 }
