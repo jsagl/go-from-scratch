@@ -8,7 +8,7 @@ import (
 
 func main() {
 	connection, _ := storage.NewPostgresConnection()
-	articleStore := storage.NewPostgresArticleStore(connection)
-	articleUseCase := usecase.NewArticleUseCase(articleStore)
-	http_server.NewHTTPServer(articleUseCase)
+	recipeStore := storage.NewPostgresRecipeStore(connection)
+	recipeUseCase := usecase.NewRecipeUseCase(recipeStore)
+	http_server.NewHTTPServer(recipeUseCase)
 }

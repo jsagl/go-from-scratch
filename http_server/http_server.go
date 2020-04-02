@@ -1,13 +1,16 @@
 package http_server
 
 import (
+	"github.com/gorilla/mux"
 	"github.com/jsagl/go-from-scratch/usecase"
 	"net/http"
 )
 
-func NewHTTPServer(usecase usecase.ArticleUseCaseInterface) {
-	articleHandler := NewArticleHandler(usecase)
+func NewHTTPServer(usecase usecase.RecipeUseCaseInterface) {
+	router := mux.NewRouter()
 
-	http.HandleFunc("/", articleHandler.GetArticle)
-	http.ListenAndServe(":8080", nil)
+	recipeHandler := NewRecipeHandler(usecase)
+
+	router.HandleFunc("/recipes/{id}", recipeHandler.GetById)
+	http.ListenAndServe(":8080", router)
 }

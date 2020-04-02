@@ -6,7 +6,7 @@ import (
 )
 
 func NewPostgresConnection() (*sql.DB, error) {
-	Connection, err := sql.Open("postgres", "postgres://postgres:@localhost:5432/go_basics_dev")
+	Connection, err := sql.Open("postgres", "postgres://postgres:@localhost:5432/go_recipes")
 	if err != nil {
 		return nil, err
 	}
