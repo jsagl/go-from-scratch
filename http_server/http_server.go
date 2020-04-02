@@ -11,6 +11,7 @@ func NewHTTPServer(usecase usecase.RecipeUseCaseInterface) {
 
 	recipeHandler := NewRecipeHandler(usecase)
 
-	router.HandleFunc("/recipes/{id}", recipeHandler.GetById)
+	router.HandleFunc("/recipes/{id}", recipeHandler.GetById).Methods("GET")
+	router.HandleFunc("/recipes", recipeHandler.FindAll).Methods("GET")
 	http.ListenAndServe(":8080", router)
 }

@@ -7,6 +7,7 @@ import (
 
 type RecipeUseCaseInterface interface {
 	GetById(id int64) (*models.Recipe, error)
+	FindAll() ([]*models.Recipe, error)
 }
 
 type RecipeUseCase struct  {
@@ -24,4 +25,13 @@ func (usecase *RecipeUseCase) GetById(id int64) (*models.Recipe, error) {
 	}
 
 	return recipe, nil
+}
+
+func (usecase *RecipeUseCase) FindAll() ([]*models.Recipe, error) {
+	recipes, err := usecase.store.FindAll()
+	if err != nil {
+		return nil, err
+	}
+
+	return recipes, nil
 }

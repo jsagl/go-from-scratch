@@ -2,6 +2,7 @@ package storage
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/jsagl/go-from-scratch/models"
 	"strings"
 )
@@ -30,4 +31,44 @@ func (store *PostgresRecipeStore) GetById(recipeId int64) (*models.Recipe, error
 	ingredientsList := strings.Split(ingredients, ";")
 
 	return &models.Recipe{ID: id, Title: title, Description: description, IngredientsList: ingredientsList}, nil
+}
+
+func (store *PostgresRecipeStore) FindAll() ([]*models.Recipe, error) {
+	query:= "SELECT id, title, description, ingredients_list FROM recipes"
+	rows, err := store.Connection.Query(query)
+	if err != nil {
+		return nil, models.ErrInternalServerError
+	}
+
+	defer func() {
+		err := rows.Close()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}()
+
+	recipes := make([]*models.Recipe, 0)
+
+	var ingredients string
+
+	for rows.Next() {
+		recipe := &models.Recipe{}
+		err := rows.Scan(
+			&recipe.ID,
+			&recipe.Title,
+			&recipe.Description,
+			&ingredients,
+		)
+
+		recipe.IngredientsList = strings.Split(ingredients, ";")
+
+		if err != nil {
+			fmt.Println(err)
+			return nil, err
+		}
+
+		recipes = append(recipes, recipe)
+	}
+
+	return recipes, nil
 }

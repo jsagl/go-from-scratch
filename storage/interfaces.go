@@ -4,4 +4,5 @@ import "github.com/jsagl/go-from-scratch/models"
 
 type RecipeStore interface {
 	GetById(id int64) (*models.Recipe, error)
+	FindAll() ([]*models.Recipe, error)
 }

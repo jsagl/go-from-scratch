@@ -30,5 +30,15 @@ func (handler *RecipeHandler) GetById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(recipe.Title)
+	fmt.Println(recipe)
+}
+
+func (handler *RecipeHandler) FindAll(w http.ResponseWriter, r *http.Request) {
+	recipes, err := handler.usecase.FindAll()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println(recipes[0])
 }
