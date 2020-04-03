@@ -11,4 +11,6 @@ var (
 	ErrConflict = errors.New("Your Item already exist")
 	// ErrBadParamInput will throw if the given request-body or params is not valid
 	ErrBadParamInput = errors.New("Given Param is not valid")
+	// ErrInvalidIdInURL will be thrown if params in the URL are not integers
+	ErrBadParameters = map[string]string{"error": "invalid_parameters"}
 )
