@@ -28,7 +28,7 @@ func (handler *RecipeHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseInt(vars["id"], 10, 64)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(models.ErrInvalidIdInURL)
+		json.NewEncoder(w).Encode(models.ErrBadParameters)
 		//fmt.Println(models.ErrInvalidIdInURL)
 		return
 	}
@@ -53,6 +53,7 @@ func (handler *RecipeHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(recipes[0])
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(recipes)
 }
 
